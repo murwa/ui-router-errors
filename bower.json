@@ -1,6 +1,12 @@
 {
     "name": "ui-router-errors",
     "description": "Angularjs ui-router simple errors module",
+    "keywords": [
+        "angularjs",
+        "ui-router",
+        "errors",
+        "error handling"
+    ],
     "main": "src/ui-router-errors.js",
     "authors": [
         {

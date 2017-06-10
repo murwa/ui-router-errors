@@ -6,7 +6,13 @@
     "name": "Peter Murwa",
     "email": "wanjala.pet@gmail.com"
   },
-  "description": "Ui Router simple redirect module",
+  "description": "Angularjs ui-router simple errors module",
+  "keywords": [
+    "angularjs",
+    "ui-router",
+    "errors",
+    "error handling"
+  ],
   "repository": "https://github.com/murwa/ui-router-errors",
   "license": "MIT",
   "devDependencies": {
