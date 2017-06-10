@@ -1,11 +1,10 @@
 describe('ui-router-errors module', function () {
-    var $state, $rootScope, $errors, state;
+    var $state, $rootScope, $errors;
     beforeEach(module('test-states'));
     beforeEach(inject(function (_$state_, _$rootScope_, _$errors_) {
         $state = _$state_;
         $rootScope = _$rootScope_;
         $errors = _$errors_;
-        state = $errors.getState();
     }));
 
     describe('ui-router $onStateChangeError', function () {
@@ -13,7 +12,7 @@ describe('ui-router-errors module', function () {
             $state.go('500');
             $rootScope.$digest();
             expect($state.current.name).not.toEqual('500');
-            expect($state.current.name).toEqual(state)
+            expect($state.current.name).toEqual($errors.getState())
         });
     });
 });

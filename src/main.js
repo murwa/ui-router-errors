@@ -18,7 +18,8 @@ angular.module('ui-router-errors', [
                 404: 'Sorry, but we cannot find what you were looking for',
                 403: 'You do not have permission to access this page',
                 500: 'Oops! Something went wrong...'
-            }
+            },
+            state: 'errors'
         };
         // For optional use in config phase
         this.setDefaults = function (values) {
@@ -44,7 +45,8 @@ angular.module('ui-router-errors', [
                 code = null,
                 title = null,
                 icon = null,
-                message = null;
+                message = null,
+                error = {};
             /**
              * Get the error code
              *
@@ -147,19 +149,37 @@ angular.module('ui-router-errors', [
                 var messages = config.messages;
                 return messages && key ? messages[key] : messages;
             }
+
+            /**
+             * Set error
+             * @param {*} value
+             * @return {*}
+             */
+            self.setError = function (value) {
+                error = value;
+                return self;
+            }
+            /**
+             * Get error
+             * @return {*}
+             */
+            self.getError = function () {
+                return error;
+            }
         }
     }])
     .run(['$rootScope', '$errors', '$state', function ($rootScope, $errors, $state) {
         var errorState = $errors.getState();
         // Surely 404
         $rootScope.$on('$stateNotFound', function () {
-            var error = arguments[5];
-            return ErrorService.setTitle('404').setCode(404);
-        })
+            console.log('State not found')
+            $errors.setError(arguments[5]).setCode(500);
+            return $state.transitionTo(errorState);
+        });
         // Something went wrong when loading
         $rootScope.$on('$stateChangeError', function () {
-            var error = arguments[5];
-            ErrorService.setTitle('500').setCode(500);
-            return $state.transitionTo(errorState.name);
-        })
+            console.log('State change error');
+            $errors.setError(arguments[5]).setCode(500);
+            return $state.transitionTo(errorState);
+        });
     }]);

@@ -8,9 +8,9 @@ angular.module('test-states', [
         $qProvider.errorOnUnhandledRejections(false);
 
         // Set error state
-        $errorsProvider.setDefaults({
-            state: 'errors'
-        });
+        // $errorsProvider.setDefaults({
+        //     state: 'error'
+        // });
         // Sample states
         $stateProvider
             .state({
@@ -20,16 +20,16 @@ angular.module('test-states', [
                 }
             })
             .state({
+                name: 'errors',
+                template: 'Error page',
+                // url: '*path'
+            })
+            .state({
                 name: '500',
                 resolve: {
                     error: function(){
                         throw 'I\ll cause an error';
                     }
                 }
-            })
-            .state({
-                name: 'errors',
-                template: 'Error page',
-                url: '*path'
             });
     }]);
