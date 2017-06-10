@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/murwa/ui-router-errors.svg?branch=master)](https://travis-ci.org/murwa/ui-router-errors)
 
-## UI-Router Redirect
+## UI-Router Errors
 
 An angularjs module to easily handle errors between and on states
 
