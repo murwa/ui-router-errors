@@ -15,7 +15,7 @@ bower install ui-router-errors
 In your page, add:
 
 ~~~html
-<script src="bower_components/ui-router-errors/src/ui-router-errors.js"></script>
+<script src="bower_components/ui-router-errors/dist/ui-router-errors.min.js"></script>
 ~~~
 
 ### Usage
@@ -30,4 +30,19 @@ var app = angular.module('app', ['ui-router-errors']
 
 #### State Definition
 
-Loading...
+##### Easiest
+
+Simply add your error state like so:
+
+~~~javascript
+    var state = {
+        name: 'errors',
+        template: 'Error occured',
+        controller: ['$errors', function($errors){
+            var self = this;
+            angular.extend(self, $errors);
+
+            // Access get methods in your template
+        }]
+    }
+~~~
