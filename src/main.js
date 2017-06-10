@@ -168,17 +168,38 @@ angular.module('ui-router-errors', [
             }
         }
     }])
+    .config(['$urlRouterProvider', function ($urlRouterProvider) {
+        // Otherwise
+        $urlRouterProvider.otherwise(function ($injector, $location) {
+            var url = $location.url(), 
+            $rootScope = $injector.get('$rootScope'),
+            $state = $injector.get('$state'),
+            $errors = $injector.get('$errors');
+
+            // Is this from an error state?
+            if($state.current && $state.current.name === $errors.getState()){
+                console.log('Is error state');
+                return url;
+            }
+            console.log($state.current, url, 'Otherwise block - firing $urlNotFound event');
+            $rootScope.$emit('$urlNotFound', {code: 404, exception: 'URL was not matched'});
+            return url;
+        });
+    }])
     .run(['$rootScope', '$errors', '$state', function ($rootScope, $errors, $state) {
         var errorState = $errors.getState();
-        // Surely 404
+        // State not found
         $rootScope.$on('$stateNotFound', function () {
-            console.log('State not found')
-            $errors.setError(arguments[5]).setCode(500);
+            $errors.setError(arguments[5]).setCode(400);
+            return $state.transitionTo(errorState);
+        });
+        // Url not found
+        $rootScope.$on('$urlNotFound', function (error) {
+            $errors.setError(error).setCode(error.code);
             return $state.transitionTo(errorState);
         });
         // Something went wrong when loading
         $rootScope.$on('$stateChangeError', function () {
-            console.log('State change error');
             $errors.setError(arguments[5]).setCode(500);
             return $state.transitionTo(errorState);
         });
