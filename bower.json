@@ -7,7 +7,7 @@
         "errors",
         "error handling"
     ],
-    "main": "dist/ui-router-errors.min.js",
+    "main": "src/main.js",
     "authors": [
         {
             "name": "Peter Murwa",
