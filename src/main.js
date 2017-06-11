@@ -178,10 +178,8 @@ angular.module('ui-router-errors', [
 
             // Is this from an error state?
             if($state.current && $state.current.name === $errors.getState()){
-                console.log('Is error state');
                 return url;
             }
-            console.log($state.current, url, 'Otherwise block - firing $urlNotFound event');
             $rootScope.$emit('$urlNotFound', {code: 404, exception: 'URL was not matched'});
             return url;
         });
